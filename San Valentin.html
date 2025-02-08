@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <!-- Meta para adaptabilidad en móviles -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>San Valentín - Corazones y Flores</title>
+  <style>
+    /* Estilos globales */
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #6a0dad; /* Fondo morado */
+      font-family: Arial, sans-serif;
+      position: relative;
+    }
+
+    /* Contenedor para los elementos animados de fondo */
+    #background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    /* Wrapper de cada elemento (flor o corazón) con animación flotante */
+    .flower-wrapper {
+      position: absolute;
+      animation: floatAnimation linear infinite;
+    }
+
+    @keyframes floatAnimation {
+      0%   { transform: translateY(0px) rotate(0deg); }
+      50%  { transform: translateY(-20px) rotate(5deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
+
+    /* Contenedor del mensaje central */
+    #message-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      max-width: 90%;
+    }
+
+    #message-container h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: #333;
+    }
+
+    #message-container .buttons {
+      margin-top: 20px;
+    }
+
+    #message-container button {
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #message-container button#yes {
+      background: #27ae60;
+      color: #fff;
+    }
+    #message-container button#no {
+      background: #c0392b;
+      color: #fff;
+    }
+
+    /* Adaptación para móviles */
+    @media (max-width: 600px) {
+      #message-container {
+        width: 90%;
+        padding: 15px;
+      }
+      #message-container h1 {
+        font-size: 1.2rem;
+      }
+      #message-container button {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+      }
+    }
+
+    /* ==========================
+       Estilos de las Flores Mejoradas
+       ========================== */
+
+    /* ---------- ROSE (Rosa) ---------- */
+    .flower.rose {
+      position: relative;
+      width: 70px;
+      height: 70px;
+    }
+    .flower.rose .petal {
+      position: absolute;
+      width: 35px;
+      height: 60px;
+      background: radial-gradient(circle at 50% 30%, #ff7f7f, #ff3d3d);
+      border-radius: 50% 50% 40% 40%;
+      transform-origin: bottom center;
+      opacity: 0.95;
+      /* Aseguramos que la transformación se haga desde el centro */
+      left: 50%;
+      top: 50%;
+    }
+    .flower.rose .center {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #f1c40f;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    }
+
+    /* ---------- DAISY (Margarita) ---------- */
+    .flower.daisy {
+      position: relative;
+      width: 70px;
+      height: 70px;
+    }
+    .flower.daisy .petal {
+      position: absolute;
+      width: 15px;
+      height: 35px;
+      background: #fff;
+      border-radius: 50%;
+      transform-origin: bottom center;
+      box-shadow: inset 0 0 2px rgba(0,0,0,0.1);
+      left: 50%;
+      top: 50%;
+    }
+    .flower.daisy .center {
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      background: #f1c40f;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: inset 0 0 3px rgba(0,0,0,0.2);
+    }
+
+    /* ---------- HEART (Corazón) ---------- */
+    .flower.heart {
+      position: relative;
+      width: 50px;
+      height: 50px;
+      background: red;
+      transform: rotate(-45deg);
+    }
+    .flower.heart::before,
+    .flower.heart::after {
+      content: "";
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background: red;
+      border-radius: 50%;
+    }
+    .flower.heart::before {
+      top: -25px;
+      left: 0;
+    }
+    .flower.heart::after {
+      left: 25px;
+      top: 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Contenedor de fondo con elementos animados (flores y corazones) -->
+  <div id="background"></div>
+
+  <!-- Contenedor del mensaje central -->
+  <div id="message-container">
+    <h1>¿Quieres ser mi San Valentín?</h1>
+    <div class="buttons">
+      <button id="yes">SI</button>
+      <button id="no">NO</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const background = document.getElementById('background');
+      const totalElements = 30; // Número total de elementos (flores y corazones)
+
+      // Función auxiliar para obtener un número aleatorio entre min y max
+      function random(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      // Función para crear una rosa mejorada
+      function createRose() {
+        const rose = document.createElement('div');
+        rose.classList.add('flower', 'rose');
+        const numPetals = 8;
+        for (let i = 0; i < numPetals; i++) {
+          const petal = document.createElement('div');
+          petal.classList.add('petal');
+          // Posicionar cada pétalo en el centro del contenedor
+          petal.style.left = '50%';
+          petal.style.top = '50%';
+          const angle = i * (360 / numPetals);
+          petal.style.transform = `translate(-50%, -100%) rotate(${angle}deg)`;
+          rose.appendChild(petal);
+        }
+        const center = document.createElement('div');
+        center.classList.add('center');
+        rose.appendChild(center);
+        return rose;
+      }
+
+      // Función para crear una margarita (daisy) mejorada
+      function createDaisy() {
+        const daisy = document.createElement('div');
+        daisy.classList.add('flower', 'daisy');
+        const numPetals = 10;
+        for (let i = 0; i < numPetals; i++) {
+          const petal = document.createElement('div');
+          petal.classList.add('petal');
+          petal.style.left = '50%';
+          petal.style.top = '50%';
+          const angle = i * (360 / numPetals);
+          petal.style.transform = `translate(-50%, -100%) rotate(${angle}deg)`;
+          daisy.appendChild(petal);
+        }
+        const center = document.createElement('div');
+        center.classList.add('center');
+        daisy.appendChild(center);
+        return daisy;
+      }
+
+      // Función para crear un corazón (heart)
+      function createHeart() {
+        const heart = document.createElement('div');
+        heart.classList.add('flower', 'heart');
+        return heart;
+      }
+
+      // Función que selecciona aleatoriamente un tipo de elemento
+      function createRandomFlower() {
+        const flowerTypes = ['rose', 'heart', 'daisy'];
+        const type = flowerTypes[Math.floor(Math.random() * flowerTypes.length)];
+        if (type === 'rose') {
+          return createRose();
+        } else if (type === 'heart') {
+          return createHeart();
+        } else {
+          return createDaisy();
+        }
+      }
+
+      // Crear y animar los elementos de fondo (flores y corazones)
+      for (let i = 0; i < totalElements; i++) {
+        const elementWrapper = document.createElement('div');
+        elementWrapper.classList.add('flower-wrapper');
+        // Posición aleatoria en la pantalla
+        elementWrapper.style.left = random(0, 100) + '%';
+        elementWrapper.style.top = random(0, 100) + '%';
+        // Duración de animación aleatoria (entre 5 y 15 segundos)
+        const duration = random(5, 15);
+        elementWrapper.style.animationDuration = duration + 's';
+        // Escala aleatoria para dar variedad
+        const scale = random(0.5, 1.5);
+        elementWrapper.style.transform = `scale(${scale})`;
+        // Crear el elemento aleatorio y agregarlo al wrapper
+        const element = createRandomFlower();
+        elementWrapper.appendChild(element);
+        background.appendChild(elementWrapper);
+      }
+
+      // Eventos para los botones del mensaje central
+      document.getElementById('yes').addEventListener('click', () => {
+        alert('¡Qué alegría! Preparémonos para un San Valentín inolvidable.');
+      });
+      document.getElementById('no').addEventListener('click', () => {
+        alert('Está bien, espero que tengas un excelente día.');
+      });
+    });
+  </script>
+</body>
+</html>
