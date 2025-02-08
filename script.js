@@ -1,6 +1,43 @@
 document.addEventListener('DOMContentLoaded', () => {
   const background = document.getElementById('background');
   const totalElements = 30; // Número total de elementos (flores y corazones)
+  const messageHeader = document.querySelector('#message-container h1');
+  const yesButton = document.getElementById('yes');
+  const noButton = document.getElementById('no');
+
+  // Array con 27 frases (7 dadas + 20 adicionales)
+  const noPhrases = [
+    "Segura?",
+    "Tal vez te equivocaste",
+    "Insisto, dime que si",
+    "No le des más al no",
+    "No me amas?",
+    "Esto no es divertido",
+    "Oye, dale al siiiiiii",
+    "¿Estás segura de tu respuesta?",
+    "Vamos, no seas tímida",
+    "Piensa en lo bonito que será",
+    "No te hagas la difícil",
+    "¿Por qué te resistes?",
+    "Solo dime que sí, por favor",
+    "No me dejes solo",
+    "No seas testaruda",
+    "Te necesito decir que sí",
+    "¿Qué pasa, no te animas?",
+    "Insisto, solo un sí",
+    "No seas dura",
+    "Dale, acepta",
+    "¿No te das cuenta?",
+    "No me dejes esperando",
+    "Por favor, di que sí",
+    "No huyas de este amor",
+    "No, en serio, di sí",
+    "Confía en mí, acepta",
+    "No lo pienses más",
+    "Solo un sí, por favor",
+    "Deja de negar",
+    "Tómate un momento y di sí"
+  ];
 
   // Función auxiliar para obtener un número aleatorio entre min y max
   function random(min, max) {
@@ -87,11 +124,31 @@ document.addEventListener('DOMContentLoaded', () => {
     background.appendChild(elementWrapper);
   }
 
-  // Eventos para los botones del mensaje central
-  document.getElementById('yes').addEventListener('click', () => {
+  // Evento para el botón YES (mantiene su comportamiento)
+  yesButton.addEventListener('click', () => {
     alert('¡Qué alegría! Preparémonos para un San Valentín inolvidable.');
   });
-  document.getElementById('no').addEventListener('click', () => {
-    alert('Está bien, espero que tengas un excelente día.');
+
+  // Evento para el botón NO: cambia el texto y reposiciona el botón de forma aleatoria
+  noButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    // Seleccionar una frase aleatoria del arreglo
+    const randomPhrase = noPhrases[Math.floor(Math.random() * noPhrases.length)];
+    // Actualizar el texto del encabezado
+    messageHeader.textContent = randomPhrase;
+    // Aseguramos que el botón se posicione de forma fija y con un z-index alto
+    noButton.style.position = 'fixed';
+    noButton.style.zIndex = '1000';
+    
+    // Calcular dimensiones y límites para la posición
+    const btnWidth = noButton.offsetWidth;
+    const btnHeight = noButton.offsetHeight;
+    const maxX = window.innerWidth - btnWidth;
+    const maxY = window.innerHeight - btnHeight;
+    // Generar valores aleatorios dentro de esos límites
+    const randomX = Math.floor(Math.random() * maxX);
+    const randomY = Math.floor(Math.random() * maxY);
+    noButton.style.left = randomX + 'px';
+    noButton.style.top = randomY + 'px';
   });
 });

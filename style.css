@@ -54,19 +54,24 @@ html, body {
   color: #333;
 }
 
+/* Contenedor de botones en fila */
 #message-container .buttons {
   margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 
-#message-container button {
-  margin: 5px;
-  padding: 10px 20px;
+/* Los botones ocupan 48% para dejar un pequeño espacio entre ellos */
+#message-container .buttons button {
+  width: 48%;
+  padding: 10px 0;
   font-size: 1rem;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
+/* Estilos individuales para cada botón */
 #message-container button#yes {
   background: #27ae60;
   color: #fff;
@@ -75,6 +80,8 @@ html, body {
 #message-container button#no {
   background: #c0392b;
   color: #fff;
+  /* Inicialmente se posiciona como relativo; al hacer click se cambiará a fixed */
+  position: relative;
 }
 
 /* Adaptación para móviles */
@@ -86,8 +93,8 @@ html, body {
   #message-container h1 {
     font-size: 1.2rem;
   }
-  #message-container button {
-    padding: 8px 16px;
+  #message-container .buttons button {
+    padding: 8px 0;
     font-size: 0.9rem;
   }
 }
