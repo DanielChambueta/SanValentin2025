@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const messageContainer = document.getElementById('message-container');
   const messageHeader = document.querySelector('#message-container h1');
   const subText = document.getElementById('subtext'); // Elemento para el subtexto
+  const headerImage = document.querySelector('.header-image'); // Referencia a la imagen de encabezado
   const yesButton = document.getElementById('yes');
   const noButton = document.getElementById('no');
 
@@ -132,8 +133,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ----------------------
-     NUEVA FUNCIONALIDAD:
-     Fuegos artificiales al presionar SI
+    NUEVA FUNCIONALIDAD:
+    Fuegos artificiales al presionar SI
      ---------------------- */
   function createFireworks() {
     // Crear contenedor para fuegos artificiales
@@ -180,7 +181,10 @@ document.addEventListener('DOMContentLoaded', () => {
      FIN NUEVA FUNCIONALIDAD
      ---------------------- */
 
-  // Evento para el botón YES: muestra la animación, cambia el mensaje y elimina los botones
+  // URL de la nueva imagen que se mostrará al presionar SI
+  const newHeaderImageURL = "https://media.tenor.com/lejJGRJwlREAAAAM/bubu-bubu-dudu.gif"; // Reemplaza esta URL por la imagen que desees
+
+  // Evento para el botón YES: muestra la animación, cambia el mensaje, elimina los botones y cambia la imagen
   yesButton.addEventListener('click', () => {
     // Cambiar el mensaje principal a "TE AMO 💘"
     messageHeader.textContent = "TE AMO 💘";
@@ -188,7 +192,9 @@ document.addEventListener('DOMContentLoaded', () => {
     subText.textContent = "";
     // Lanzar la animación de fuegos artificiales
     createFireworks();
-    // Eliminar el contenedor de botones para que ya no se vean
+    // Cambiar la imagen del encabezado al presionar SI
+    headerImage.src = newHeaderImageURL;
+    // Eliminar el contenedor de botones
     const buttonsContainer = document.querySelector('#message-container .buttons');
     if (buttonsContainer) {
       buttonsContainer.remove();
