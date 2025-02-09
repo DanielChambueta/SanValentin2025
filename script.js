@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Evento para el botón YES: muestra la animación, cambia el mensaje, elimina los botones y cambia la imagen
   yesButton.addEventListener('click', () => {
     // Cambiar el mensaje principal a "TE AMO 💘"
-    messageHeader.textContent = "TE AMO 💘";
+    messageHeader.textContent = "TE AMOOOOOO 💘, GRACIAS POR SER MI SAN VALENTÍN. 😍😘";
     // Opcional: limpiar el subtexto si hubiera contenido
     subText.textContent = "";
     // Lanzar la animación de fuegos artificiales
