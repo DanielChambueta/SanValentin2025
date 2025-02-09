@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const totalElements = 30; // Número total de elementos (flores y corazones)
   const messageContainer = document.getElementById('message-container');
   const messageHeader = document.querySelector('#message-container h1');
-  const subText = document.getElementById('subtext'); // Elemento para el texto que cambia
+  const subText = document.getElementById('subtext'); // Elemento para el subtexto
   const yesButton = document.getElementById('yes');
   const noButton = document.getElementById('no');
 
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return rose;
   }
 
-  // Función para crear una margarita (daisy) mejorada
+  // Función para crear una margarita (daisy)
   function createDaisy() {
     const daisy = document.createElement('div');
     daisy.classList.add('flower', 'daisy');
@@ -131,7 +131,10 @@ document.addEventListener('DOMContentLoaded', () => {
     background.appendChild(elementWrapper);
   }
 
-  // Función para crear fuegos artificiales
+  /* ----------------------
+     NUEVA FUNCIONALIDAD:
+     Fuegos artificiales al presionar SI
+     ---------------------- */
   function createFireworks() {
     // Crear contenedor para fuegos artificiales
     const fireworksContainer = document.createElement('div');
@@ -173,8 +176,11 @@ document.addEventListener('DOMContentLoaded', () => {
       fireworksContainer.remove();
     }, 2000);
   }
+  /* ----------------------
+     FIN NUEVA FUNCIONALIDAD
+     ---------------------- */
 
-  // Evento para el botón YES: muestra la animación de fuegos artificiales y cambia el mensaje
+  // Evento para el botón YES: muestra la animación, cambia el mensaje y elimina los botones
   yesButton.addEventListener('click', () => {
     // Cambiar el mensaje principal a "TE AMO 💘"
     messageHeader.textContent = "TE AMO 💘";
@@ -182,6 +188,11 @@ document.addEventListener('DOMContentLoaded', () => {
     subText.textContent = "";
     // Lanzar la animación de fuegos artificiales
     createFireworks();
+    // Eliminar el contenedor de botones para que ya no se vean
+    const buttonsContainer = document.querySelector('#message-container .buttons');
+    if (buttonsContainer) {
+      buttonsContainer.remove();
+    }
   });
 
   // Evento para el botón NO:
@@ -230,7 +241,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const buttonsContainer = document.querySelector('#message-container .buttons');
       const yesClone = yesButton.cloneNode(true);
       yesClone.addEventListener('click', () => {
-        alert('¡Qué alegría! Preparémonos para un San Valentín inolvidable.');
+        messageHeader.textContent = "TE AMO 💘";
+        subText.textContent = "";
+        createFireworks();
+        const btnContainer = document.querySelector('#message-container .buttons');
+        if(btnContainer) btnContainer.remove();
       });
       buttonsContainer.appendChild(yesClone);
     }
