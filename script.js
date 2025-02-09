@@ -1,10 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
   const background = document.getElementById('background');
   const totalElements = 30; // Número total de elementos (flores y corazones)
-  const messageContainer = document.getElementById('message-container'); // ¡Asegurarse de declarar esta variable!
+  const messageContainer = document.getElementById('message-container'); // Asegurarse de declarar esta variable
   const messageHeader = document.querySelector('#message-container h1');
   const yesButton = document.getElementById('yes');
   const noButton = document.getElementById('no');
+
+  // Variable para controlar la escala del botón NO
+  let noButtonScale = 1; // Tamaño original
 
   // Array con 27 frases (7 dadas + 20 adicionales)
   const noPhrases = [
@@ -15,29 +18,28 @@ document.addEventListener('DOMContentLoaded', () => {
     "No me amas?",
     "Esto no es divertido",
     "Oye, dale al siiiiiii",
-    "¿Estás segura de tu respuesta?",
-    "Vamos, no seas tímida",
-    "Piensa en lo bonito que será",
-    "No te hagas la difícil",
-    "¿Por qué te resistes?",
-    "Solo dime que sí, por favor",
-    "No me dejes solo",
-    "No seas testaruda",
-    "Te necesito decir que sí",
-    "¿Qué pasa, no te animas?",
+    "Jmmm",
+    "De nuevo",
+    "Estás segura?",
+    "😢",
+    "Puedo estar aquí todo el día",
+    "NONONONONONONONON",
+    "Dale al sí y te llevaras una sorpresa amor",
+    "💔",
+    "Di que siiiiii",
+    "Nop, intenta de nuevo",
     "Insisto, solo un sí",
-    "No seas dura",
-    "Dale, acepta",
-    "¿No te das cuenta?",
-    "No me dejes esperando",
-    "Por favor, di que sí",
-    "No huyas de este amor",
+    "No me dejes en visto",
+    "Aceptaaaaa",
+    "Sigo esperando",
+    "😑",
+    "Acepta, y ven a mi jajajajja",
     "No, en serio, di sí",
     "Confía en mí, acepta",
     "No lo pienses más",
-    "Solo un sí, por favor",
-    "Deja de negar",
-    "Tómate un momento y di sí"
+    "Flores para que digas que si 🌹",
+    "No quieres saber que sorpresa te tengo",
+    "😏 SI?",
   ];
 
   // Función auxiliar para obtener un número aleatorio entre min y max
@@ -130,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
     alert('¡Qué alegría! Preparémonos para un San Valentín inolvidable.');
   });
 
-  // Evento para el botón NO: cambia el texto y mueve el botón dentro del mensaje
+  // Evento para el botón NO: cambia el texto, mueve el botón dentro del mensaje y lo hace más pequeño
   noButton.addEventListener('click', (e) => {
     e.preventDefault();
     
@@ -157,5 +159,9 @@ document.addEventListener('DOMContentLoaded', () => {
     noButton.style.position = "absolute"; // Se mantiene dentro del contenedor
     noButton.style.left = `${newX}px`;
     noButton.style.top = `${newY}px`;
+    
+    // Reducir el tamaño del botón en un 10% cada vez, hasta un mínimo de escala 0.5
+    noButtonScale = Math.max(0.5, noButtonScale * 0.9);
+    noButton.style.transform = `scale(${noButtonScale})`;
   });
 });
