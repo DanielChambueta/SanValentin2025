@@ -3,12 +3,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const totalElements = 30; // Número total de elementos (flores y corazones)
   const messageContainer = document.getElementById('message-container');
   const messageHeader = document.querySelector('#message-container h1');
-  const subText = document.getElementById('subtext'); // Referencia al nuevo elemento de subtexto
+  const subText = document.getElementById('subtext'); // Elemento para el texto que cambia
   const yesButton = document.getElementById('yes');
   const noButton = document.getElementById('no');
 
   // Variable para controlar la escala del botón NO
   let noButtonScale = 1; // Tamaño original
+
+  // Variable para contar los intentos al hacer clic en el botón NO
+  let noAttempts = 0;
 
   // Array con 27 frases (7 dadas + 20 adicionales)
   const noPhrases = [
@@ -134,38 +137,54 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Evento para el botón NO:
-  // - Muestra una frase en el subtexto (debajo del mensaje principal).
-  // - Reposiciona el botón dentro del contenedor.
-  // - Reduce el tamaño del botón en cada clic.
   noButton.addEventListener('click', (e) => {
     e.preventDefault();
     
-    // Seleccionar una frase aleatoria y actualizar el subtexto (no el h1)
-    const randomPhrase = noPhrases[Math.floor(Math.random() * noPhrases.length)];
-    subText.textContent = randomPhrase;
-  
-    // Obtener las dimensiones y posición del contenedor del mensaje
-    const containerRect = messageContainer.getBoundingClientRect();
-    const btnWidth = noButton.offsetWidth;
-    const btnHeight = noButton.offsetHeight;
-  
-    // Definir los límites para que el botón NO se mueva dentro del mensaje
-    const minX = 10; // Margen izquierdo mínimo
-    const maxX = containerRect.width - btnWidth - 10; // Evitar que el botón salga del lado derecho
-    const minY = 50; // Margen superior dentro del contenedor
-    const maxY = containerRect.height - btnHeight - 20; // Evitar que el botón salga por abajo
-  
-    // Generar nueva posición dentro de los límites calculados
-    const newX = Math.random() * (maxX - minX) + minX;
-    const newY = Math.random() * (maxY - minY) + minY;
-  
-    // Mover el botón dentro del mensaje
-    noButton.style.position = "absolute"; // Se mantiene dentro del contenedor
-    noButton.style.left = `${newX}px`;
-    noButton.style.top = `${newY}px`;
+    // Incrementar contador de intentos
+    noAttempts++;
+
+    // Si los intentos son menores a 20, se comporta de forma normal:
+    if (noAttempts < 20) {
+      // Seleccionar una frase aleatoria y actualizar el subtexto (sin cambiar el h1)
+      const randomPhrase = noPhrases[Math.floor(Math.random() * noPhrases.length)];
+      subText.textContent = randomPhrase;
     
-    // Reducir el tamaño del botón en un 10% cada vez, hasta un mínimo de escala 0.5
-    noButtonScale = Math.max(0.5, noButtonScale * 0.9);
-    noButton.style.transform = `scale(${noButtonScale})`;
+      // Obtener las dimensiones y posición del contenedor del mensaje
+      const containerRect = messageContainer.getBoundingClientRect();
+      const btnWidth = noButton.offsetWidth;
+      const btnHeight = noButton.offsetHeight;
+    
+      // Definir los límites para que el botón NO se mueva dentro del mensaje
+      const minX = 10; // Margen izquierdo mínimo
+      const maxX = containerRect.width - btnWidth - 10; // Evitar que el botón salga del lado derecho
+      const minY = 50; // Margen superior dentro del contenedor
+      const maxY = containerRect.height - btnHeight - 20; // Evitar que el botón salga por abajo
+    
+      // Generar nueva posición dentro de los límites calculados
+      const newX = Math.random() * (maxX - minX) + minX;
+      const newY = Math.random() * (maxY - minY) + minY;
+    
+      // Mover el botón dentro del mensaje
+      noButton.style.position = "absolute"; // Se mantiene dentro del contenedor
+      noButton.style.left = `${newX}px`;
+      noButton.style.top = `${newY}px`;
+      
+      // Reducir el tamaño del botón en un 10% cada vez, hasta un mínimo de escala 0.5
+      noButtonScale = Math.max(0.5, noButtonScale * 0.9);
+      noButton.style.transform = `scale(${noButtonScale})`;
+    } else {
+      // Si se han alcanzado 20 intentos:
+      // 1. Se remueve el botón NO
+      noButton.remove();
+      
+      // 2. Se clona el botón SI y se agrega al contenedor de botones.
+      //    (Se añade el mismo evento de clic para que funcione igual.)
+      const buttonsContainer = document.querySelector('#message-container .buttons');
+      const yesClone = yesButton.cloneNode(true);
+      yesClone.addEventListener('click', () => {
+        alert('¡Qué alegría! Preparémonos para un San Valentín inolvidable.');
+      });
+      buttonsContainer.appendChild(yesClone);
+    }
   });
 });
