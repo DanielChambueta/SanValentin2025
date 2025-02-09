@@ -131,9 +131,57 @@ document.addEventListener('DOMContentLoaded', () => {
     background.appendChild(elementWrapper);
   }
 
-  // Evento para el botón YES (mantiene su comportamiento)
+  // Función para crear fuegos artificiales
+  function createFireworks() {
+    // Crear contenedor para fuegos artificiales
+    const fireworksContainer = document.createElement('div');
+    fireworksContainer.id = 'fireworks';
+    document.body.appendChild(fireworksContainer);
+
+    // Definir el número de partículas y el punto de origen (centro de la pantalla)
+    const numParticles = 50;
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+
+    for (let i = 0; i < numParticles; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('firework-particle');
+
+      // Posicionar la partícula en el centro
+      particle.style.left = centerX + 'px';
+      particle.style.top = centerY + 'px';
+
+      // Calcular un ángulo y distancia aleatoria para la explosión
+      const angle = Math.random() * 2 * Math.PI;
+      const distance = Math.random() * 200 + 50; // distancia aleatoria entre 50 y 250 px
+      const tx = Math.cos(angle) * distance;
+      const ty = Math.sin(angle) * distance;
+      particle.style.setProperty('--tx', tx + 'px');
+      particle.style.setProperty('--ty', ty + 'px');
+
+      // Asignar un color aleatorio
+      const r = Math.floor(random(128, 255));
+      const g = Math.floor(random(0, 128));
+      const b = Math.floor(random(128, 255));
+      particle.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+
+      fireworksContainer.appendChild(particle);
+    }
+
+    // Remover el contenedor de fuegos artificiales después de la animación (1.5s + un poco de margen)
+    setTimeout(() => {
+      fireworksContainer.remove();
+    }, 2000);
+  }
+
+  // Evento para el botón YES: muestra la animación de fuegos artificiales y cambia el mensaje
   yesButton.addEventListener('click', () => {
-    alert('¡Qué alegría! Preparémonos para un San Valentín inolvidable.');
+    // Cambiar el mensaje principal a "TE AMO 💘"
+    messageHeader.textContent = "TE AMO 💘";
+    // Opcional: limpiar el subtexto si hubiera contenido
+    subText.textContent = "";
+    // Lanzar la animación de fuegos artificiales
+    createFireworks();
   });
 
   // Evento para el botón NO:
