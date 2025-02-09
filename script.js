@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
   const background = document.getElementById('background');
   const totalElements = 30; // Número total de elementos (flores y corazones)
-  const messageContainer = document.getElementById('message-container'); // Asegurarse de declarar esta variable
+  const messageContainer = document.getElementById('message-container');
   const messageHeader = document.querySelector('#message-container h1');
+  const subText = document.getElementById('subtext'); // Referencia al nuevo elemento de subtexto
   const yesButton = document.getElementById('yes');
   const noButton = document.getElementById('no');
 
@@ -24,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     "😢",
     "Puedo estar aquí todo el día",
     "NONONONONONONONON",
-    "Dale al sí y te llevaras una sorpresa amor",
+    "Dale al sí y te llevarás una sorpresa amor",
     "💔",
     "Di que siiiiii",
     "Nop, intenta de nuevo",
@@ -33,13 +34,13 @@ document.addEventListener('DOMContentLoaded', () => {
     "Aceptaaaaa",
     "Sigo esperando",
     "😑",
-    "Acepta, y ven a mi jajajajja",
+    "Acepta, y ven a mí jajajajja",
     "No, en serio, di sí",
     "Confía en mí, acepta",
     "No lo pienses más",
-    "Flores para que digas que si 🌹",
+    "Flores para que digas que sí 🌹",
     "No quieres saber que sorpresa te tengo",
-    "😏 SI?",
+    "😏 SI?"
   ];
 
   // Función auxiliar para obtener un número aleatorio entre min y max
@@ -132,13 +133,16 @@ document.addEventListener('DOMContentLoaded', () => {
     alert('¡Qué alegría! Preparémonos para un San Valentín inolvidable.');
   });
 
-  // Evento para el botón NO: cambia el texto, mueve el botón dentro del mensaje y lo hace más pequeño
+  // Evento para el botón NO:
+  // - Muestra una frase en el subtexto (debajo del mensaje principal).
+  // - Reposiciona el botón dentro del contenedor.
+  // - Reduce el tamaño del botón en cada clic.
   noButton.addEventListener('click', (e) => {
     e.preventDefault();
     
-    // Seleccionar una frase aleatoria
+    // Seleccionar una frase aleatoria y actualizar el subtexto (no el h1)
     const randomPhrase = noPhrases[Math.floor(Math.random() * noPhrases.length)];
-    messageHeader.textContent = randomPhrase;
+    subText.textContent = randomPhrase;
   
     // Obtener las dimensiones y posición del contenedor del mensaje
     const containerRect = messageContainer.getBoundingClientRect();

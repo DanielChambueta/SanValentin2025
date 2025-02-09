@@ -54,6 +54,13 @@ html, body {
   color: #333;
 }
 
+/* Nuevo estilo para el subtexto, más pequeño y debajo del mensaje principal */
+#subtext {
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 10px;
+}
+
 /* Contenedor de botones en fila */
 #message-container .buttons {
   margin-top: 20px;
@@ -80,7 +87,7 @@ html, body {
 #message-container button#no {
   background: #c0392b;
   color: #fff;
-  /* Inicialmente se posiciona como relativo; al hacer click se cambiará a fixed */
+  /* Inicialmente, se posiciona de forma estática; luego se cambiará a absolute en JS */
   position: relative;
 }
 
