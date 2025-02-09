@@ -234,3 +234,11 @@ html, body {
   left: 25px;
   top: 0;
 }
+
+/* Estilos para la imagen de encabezado */
+.header-image {
+  max-width: 60%;
+  height: auto;
+  display: block;
+  margin: 0 auto 10px auto; /* Centra la imagen y agrega un margen inferior */
+}
